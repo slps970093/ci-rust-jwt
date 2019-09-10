@@ -1,0 +1,12 @@
+{
+	"name": "littlechou/jwt-controller",
+	"license": "MIT",
+	"require": {
+		"chriskacerguis/codeigniter-restserver" : "2.8.0",
+		"firebase/php-jwt": "^5.0",
+		"league/event": "^2.2.0"
+	},
+	"autoload": {
+		"LittleChou\\CiJWT\\" : "src"
+	}
+}
