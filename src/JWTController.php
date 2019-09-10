@@ -12,7 +12,7 @@ namespace LittleChou\CiJWT;
 use Restserver\Libraries\REST_Controller;
 use Firebase\JWT\JWT;
 
-class JWTController extends REST_Controller
+abstract class JWTController extends REST_Controller
 {
 	const REST_REQUEST_GET = 'GET';
 
@@ -49,7 +49,7 @@ class JWTController extends REST_Controller
 			self::REST_REQUEST_DELETE,
 			self::REST_REQUEST_POST
 		];
-		if (!in_array($requestMethods,$allowRequest)) {
+		if (!in_array($requestMethods, $allowRequest)) {
 			throw new \Exception('request method error');
 		}
 		if (count($this->ignoreMethods) >= 0) {
@@ -59,7 +59,7 @@ class JWTController extends REST_Controller
 			$count = count($this->ignoreMethods[$requestMethods]);
 			if ($count >= 1) {
 				// 如果有新增過的就不要在二次新增
-				if (!in_array($methodName,$this->ignoreMethods[$requestMethods])) {
+				if (!in_array($methodName, $this->ignoreMethods[$requestMethods])) {
 					$this->ignoreMethods[$requestMethods] = $methodName;
 				}
 			} else {
@@ -80,7 +80,7 @@ class JWTController extends REST_Controller
 		$data = $this->input->get_request_header('Authorization');
 
 		if (!empty($data)) {
-			$tmp = explode('Bearer',$data);
+			$tmp = explode('Bearer', $data);
 			$token = trim($tmp[1]);
 			return $token;
 		}
@@ -104,7 +104,7 @@ class JWTController extends REST_Controller
 	 */
 	public function createJWTToken($data)
 	{
-		$token = JWT::encode($data,'demo-key',$this->jwtAlg);
+		$token = JWT::encode($data, 'demo-key', $this->jwtAlg);
 
 		return $token;
 	}
@@ -116,7 +116,7 @@ class JWTController extends REST_Controller
 	 */
 	public function decode($token)
 	{
-		$data = JWT::decode($token,'demo-key',$this->jwtAlg);
+		$data = JWT::decode($token, 'demo-key', $this->jwtAlg);
 
 		return $data;
 	}
